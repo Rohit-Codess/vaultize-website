@@ -1,0 +1,10 @@
+// Home Page Components
+export { default as Hero } from './Hero'
+export { default as PartnersShowcase } from './PartnersShowcase'
+export { default as FeaturesOverview } from './FeaturesOverview'
+export { default as WhyChooseVaultize } from './WhyChooseVaultize'
+export { default as DrmEfssHighlight } from './DrmEfssHighlight'
+export { default as RansomwareProtection } from './RansomwareProtection'
+export { default as FlexibleDeployment } from './FlexibleDeployment'
+export { default as ContactForm } from './ContactForm'
+export { default as CtaSection } from './CtaSection'
