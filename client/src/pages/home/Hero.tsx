@@ -32,14 +32,17 @@ const Hero = () => {
       {floatingIcons.map((item, index) => (
         <div
           key={index}
-          className={`absolute ${item.position} hidden lg:block`}
+          className={`absolute ${item.position} hidden lg:block cursor-pointer group`}
           style={{
             animation: `float 6s ease-in-out infinite`,
             animationDelay: item.delay
           }}
         >
-          <div className="w-16 h-16 bg-white/10 backdrop-blur-sm rounded-xl flex items-center justify-center border border-white/20 hover:bg-white/20 transition-all duration-300">
-            <item.icon className="w-8 h-8 text-blue-300" />
+          <div className="w-16 h-16 bg-white/10 backdrop-blur-sm rounded-xl flex items-center justify-center border border-white/20 hover:bg-white/20 hover:border-white/40 hover:scale-110 hover:rotate-12 transition-all duration-500 group-hover:shadow-2xl group-hover:shadow-blue-500/25">
+            <item.icon className="w-8 h-8 text-blue-300 group-hover:text-white group-hover:scale-110 transition-all duration-300" />
+            
+            {/* Ripple effect on hover */}
+            <div className="absolute inset-0 rounded-xl bg-white/20 scale-0 group-hover:scale-150 opacity-0 group-hover:opacity-50 transition-all duration-500"></div>
           </div>
         </div>
       ))}
@@ -75,9 +78,9 @@ const Hero = () => {
                 <ArrowRight className="ml-2 w-4 sm:w-5 h-4 sm:h-5 group-hover:translate-x-1 transition-transform duration-200" />
               </button>
               
-              <button className="group flex items-center text-white hover:text-blue-300 font-semibold text-base sm:text-lg transition-colors duration-200 justify-center sm:justify-start">
-                <div className="w-10 sm:w-12 h-10 sm:h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center mr-3 group-hover:bg-white/30 transition-all duration-200">
-                  <Play className="w-4 sm:w-5 h-4 sm:h-5 ml-0.5" />
+              <button className="group flex items-center text-white hover:text-blue-300 font-semibold text-base sm:text-lg transition-all duration-300 justify-center sm:justify-start hover:scale-105 active:scale-95">
+                <div className="w-10 sm:w-12 h-10 sm:h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center mr-3 group-hover:bg-blue-500/50 group-hover:shadow-lg group-hover:shadow-blue-500/25 transition-all duration-300 group-hover:rotate-3">
+                  <Play className="w-4 sm:w-5 h-4 sm:h-5 ml-0.5 group-hover:scale-110 transition-transform duration-200" />
                 </div>
                 <span className="sm:hidden">Demo</span>
                 <span className="hidden sm:inline">Watch Demo</span>
@@ -87,17 +90,25 @@ const Hero = () => {
             {/* Stats */}
             <div className="grid grid-cols-2 gap-4 sm:gap-6 lg:gap-8 max-w-md sm:max-w-none mx-auto lg:mx-0">
               {[
-                { value: '500+', label: 'Clients', fullLabel: 'Enterprise Clients' },
-                { value: '99.9%', label: 'Uptime', fullLabel: 'Uptime SLA' },
-                { value: '256-bit', label: 'Security', fullLabel: 'AES Encryption' },
-                { value: '24/7', label: 'Support', fullLabel: 'Support' }
+                { value: '500+', label: 'Clients', fullLabel: 'Enterprise Clients', color: 'from-blue-500 to-cyan-500' },
+                { value: '99.9%', label: 'Uptime', fullLabel: 'Uptime SLA', color: 'from-green-500 to-emerald-500' },
+                { value: '256-bit', label: 'Security', fullLabel: 'AES Encryption', color: 'from-orange-500 to-red-500' },
+                { value: '24/7', label: 'Support', fullLabel: 'Support', color: 'from-purple-500 to-pink-500' }
               ].map((stat, index) => (
-                <div key={index} className="text-center lg:text-left">
-                  <div className="text-xl sm:text-2xl lg:text-3xl font-bold text-blue-300 mb-1">{stat.value}</div>
-                  <div className="text-xs sm:text-sm text-gray-400">
-                    <span className="sm:hidden">{stat.label}</span>
-                    <span className="hidden sm:inline">{stat.fullLabel}</span>
+                <div key={index} className="group relative text-center lg:text-left p-3 sm:p-4 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all duration-300 cursor-pointer hover:scale-105 active:scale-95">
+                  {/* Gradient border on hover */}
+                  <div className={`absolute inset-0 rounded-xl bg-gradient-to-r ${stat.color} opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none`}></div>
+                  
+                  <div className="relative z-10">
+                    <div className="text-xl sm:text-2xl lg:text-3xl font-bold text-blue-300 group-hover:text-white mb-1 transition-colors duration-300">{stat.value}</div>
+                    <div className="text-xs sm:text-sm text-gray-400 group-hover:text-gray-200 transition-colors duration-300">
+                      <span className="sm:hidden">{stat.label}</span>
+                      <span className="hidden sm:inline">{stat.fullLabel}</span>
+                    </div>
                   </div>
+
+                  {/* Shine effect */}
+                  <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-all duration-700 pointer-events-none"></div>
                 </div>
               ))}
             </div>
@@ -107,43 +118,46 @@ const Hero = () => {
           <div className={`relative transform transition-all duration-1000 delay-300 hidden sm:block ${
             isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
           }`}>
-            <div className="relative">
+            <div className="relative group">
               {/* Main Device Mockup */}
-              <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-2xl">
-                <div className="bg-gradient-to-br from-blue-600 to-blue-700 rounded-xl p-6 mb-6">
+              <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-2xl hover:shadow-3xl hover:border-white/30 transition-all duration-500 group-hover:scale-105">
+                <div className="bg-gradient-to-br from-blue-600 to-blue-700 rounded-xl p-6 mb-6 hover:from-blue-500 hover:to-blue-600 transition-all duration-300 cursor-pointer">
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center space-x-2">
-                      <Shield className="w-6 h-6 text-white" />
+                      <Shield className="w-6 h-6 text-white group-hover:rotate-12 transition-transform duration-300" />
                       <span className="font-semibold text-white">Vaultize Dashboard</span>
                     </div>
-                    <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
+                    <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse group-hover:bg-green-300 group-hover:scale-125 transition-all duration-300"></div>
                   </div>
                   <div className="space-y-3">
-                    <div className="bg-white/20 rounded-lg h-4 w-full"></div>
-                    <div className="bg-white/20 rounded-lg h-4 w-3/4"></div>
-                    <div className="bg-white/20 rounded-lg h-4 w-1/2"></div>
+                    <div className="bg-white/20 rounded-lg h-4 w-full group-hover:bg-white/30 transition-colors duration-300"></div>
+                    <div className="bg-white/20 rounded-lg h-4 w-3/4 group-hover:bg-white/30 transition-colors duration-300" style={{ transitionDelay: '100ms' }}></div>
+                    <div className="bg-white/20 rounded-lg h-4 w-1/2 group-hover:bg-white/30 transition-colors duration-300" style={{ transitionDelay: '200ms' }}></div>
                   </div>
                 </div>
                 
                 <div className="grid grid-cols-2 gap-4">
-                  <div className="bg-green-500/20 rounded-lg p-4 border border-green-400/30">
-                    <div className="text-green-300 text-sm font-medium">Files Protected</div>
-                    <div className="text-white text-xl font-bold">98.7%</div>
+                  <div className="bg-green-500/20 rounded-lg p-4 border border-green-400/30 hover:bg-green-500/30 hover:border-green-400/50 hover:scale-105 transition-all duration-300 cursor-pointer group/card">
+                    <div className="text-green-300 text-sm font-medium group-hover/card:text-green-200 transition-colors duration-200">Files Protected</div>
+                    <div className="text-white text-xl font-bold group-hover/card:scale-110 transition-transform duration-200">98.7%</div>
                   </div>
-                  <div className="bg-blue-500/20 rounded-lg p-4 border border-blue-400/30">
-                    <div className="text-blue-300 text-sm font-medium">Active Users</div>
-                    <div className="text-white text-xl font-bold">1,247</div>
+                  <div className="bg-blue-500/20 rounded-lg p-4 border border-blue-400/30 hover:bg-blue-500/30 hover:border-blue-400/50 hover:scale-105 transition-all duration-300 cursor-pointer group/card">
+                    <div className="text-blue-300 text-sm font-medium group-hover/card:text-blue-200 transition-colors duration-200">Active Users</div>
+                    <div className="text-white text-xl font-bold group-hover/card:scale-110 transition-transform duration-200">1,247</div>
                   </div>
                 </div>
               </div>
 
               {/* Floating Mobile Device */}
-              <div className="absolute -bottom-6 -right-6 w-24 h-44 bg-gray-800 rounded-xl p-2 shadow-2xl transform rotate-12 hover:rotate-6 transition-transform duration-300">
-                <div className="bg-white rounded-lg h-full flex flex-col items-center justify-center">
-                  <Shield className="w-8 h-8 text-blue-600 mb-2" />
-                  <div className="w-12 h-2 bg-blue-600 rounded"></div>
+              <div className="absolute -bottom-6 -right-6 w-24 h-44 bg-gray-800 rounded-xl p-2 shadow-2xl transform rotate-12 hover:rotate-6 hover:scale-110 transition-all duration-500 cursor-pointer group-hover:shadow-3xl">
+                <div className="bg-white rounded-lg h-full flex flex-col items-center justify-center hover:bg-gray-50 transition-colors duration-300">
+                  <Shield className="w-8 h-8 text-blue-600 mb-2 hover:rotate-12 hover:scale-110 transition-transform duration-300" />
+                  <div className="w-12 h-2 bg-blue-600 rounded hover:bg-blue-500 transition-colors duration-300"></div>
                 </div>
               </div>
+
+              {/* Glow effect on hover */}
+              <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-500/20 to-purple-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl -z-10"></div>
             </div>
           </div>
         </div>

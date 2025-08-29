@@ -79,11 +79,11 @@ const PartnersShowcase = () => {
           </p>
         </div>
         
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 lg:gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-6 lg:gap-8">
           {partners.map((partner, index) => (
             <div 
               key={index}
-              className={`group relative bg-white rounded-xl p-6 lg:p-8 shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:scale-105 border border-gray-100 hover:border-blue-200 ${
+              className={`group relative bg-white rounded-xl p-4 sm:p-6 lg:p-8 shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:scale-105 active:scale-95 border border-gray-100 hover:border-blue-200 cursor-pointer ${
                 isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
               }`}
               style={{ 
@@ -91,22 +91,26 @@ const PartnersShowcase = () => {
                 animation: isVisible ? `fadeInUp 0.6s ease-out ${index * 0.1}s both` : ''
               }}
             >
-              {/* Hover gradient overlay */}
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-purple-500/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              {/* Hover gradient overlay - Always visible on mobile */}
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-purple-500/5 rounded-xl opacity-30 sm:opacity-0 group-hover:opacity-100 group-active:opacity-100 transition-opacity duration-300"></div>
               
               <div className="relative z-10 text-center">
-                <div className="text-gray-800 font-bold text-lg lg:text-xl mb-3 whitespace-pre-line leading-tight">
+                <div className="text-gray-800 font-bold text-base sm:text-lg lg:text-xl mb-2 sm:mb-3 whitespace-pre-line leading-tight">
                   {partner.logo}
                 </div>
-                <div className="text-xs text-gray-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                {/* Always show description on mobile, hover on desktop */}
+                <div className="text-xs text-gray-500 opacity-70 sm:opacity-0 group-hover:opacity-100 group-active:opacity-100 transition-opacity duration-300">
                   {partner.description}
                 </div>
               </div>
 
-              {/* Decorative corner */}
-              <div className="absolute top-0 right-0 w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-500 opacity-0 group-hover:opacity-20 transition-opacity duration-300" style={{
+              {/* Decorative corner - Always visible on mobile */}
+              <div className="absolute top-0 right-0 w-6 sm:w-8 h-6 sm:h-8 bg-gradient-to-br from-blue-500 to-purple-500 opacity-20 sm:opacity-0 group-hover:opacity-20 group-active:opacity-20 transition-opacity duration-300" style={{
                 clipPath: 'polygon(100% 0%, 0% 0%, 100% 100%)'
               }}></div>
+
+              {/* Mobile touch feedback */}
+              <div className="absolute inset-0 bg-blue-500/10 rounded-xl opacity-0 group-active:opacity-100 transition-opacity duration-150 sm:hidden"></div>
             </div>
           ))}
         </div>
